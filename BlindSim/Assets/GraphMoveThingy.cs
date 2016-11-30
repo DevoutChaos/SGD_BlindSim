@@ -7,6 +7,8 @@ public class GraphMoveThingy : MonoBehaviour {
     public GameObject moveLeft;
     public GameObject moveDown;
     public GameObject moveUp;
+    public GameObject bGHolder;
+    public Texture bGImage;
 
     // Use this for initialization
     void Start () {
@@ -15,28 +17,45 @@ public class GraphMoveThingy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if ((!bGHolder.Equals(null))&&(!bGImage.Equals(null)))
+        {
+            bGHolder.GetComponent<GUITexture>().texture = bGImage;
+        }
+
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            moveRight.SetActive(true);
-            this.gameObject.SetActive(false);
+            if (!moveRight.Equals(null))
+            {
+                moveRight.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            moveLeft.SetActive(true);
-            this.gameObject.SetActive(false);
+            if (!moveLeft.Equals(null))
+            {
+                moveLeft.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            moveUp.SetActive(true);
-            this.gameObject.SetActive(false);
+            if (!moveUp.Equals(null))
+            {
+                moveUp.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            moveDown.SetActive(true);
-            this.gameObject.SetActive(false);
+            if (!moveDown.Equals(null))
+            {
+                moveDown.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
         }
     }
 }
