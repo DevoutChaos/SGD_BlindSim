@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GraphMoveThingy : MonoBehaviour {
@@ -7,8 +8,10 @@ public class GraphMoveThingy : MonoBehaviour {
     public GameObject moveLeft;
     public GameObject moveDown;
     public GameObject moveUp;
-    public GameObject bGHolder;
-    public Texture bGImage;
+    public Canvas bGHolder;
+    public Image bGImage;
+    public Sprite bGimage2;
+    SpriteRenderer self;
 
     // Use this for initialization
     void Start () {
@@ -17,9 +20,9 @@ public class GraphMoveThingy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if ((!bGHolder.Equals(null))&&(!bGImage.Equals(null)))
+        if ((!bGimage2.Equals(null))&&(!bGImage.Equals(null)))
         {
-            bGHolder.GetComponent<GUITexture>().texture = bGImage;
+            bGImage.sprite = bGimage2;
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
