@@ -8,6 +8,7 @@ namespace UnityStandardAssets.ImageEffects
     [AddComponentMenu ("Image Effects/Blur/Blur (Optimized)")]
     public class BlurOptimized : PostEffectsBase
     {
+        public static BlurOptimized Inst { get; private set; }
 
         [Range(0, 2)]
         public int downsample = 1;
@@ -28,6 +29,7 @@ namespace UnityStandardAssets.ImageEffects
         public Shader blurShader = null;
         private Material blurMaterial = null;
 
+        void Awake() { Inst = this; }
 
         public override bool CheckResources () {
             CheckSupport (false);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityStandardAssets.ImageEffects;
 
 public class StoryStep : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class StoryStep : MonoBehaviour
     bool fadeOut;
     const float fadeSpeed = 1f;
     const float fadeDur = 1 / fadeSpeed;
+
+    const float blurSizeMin = 3, blurSizeMax = 4.8f;
+    const int blurItersMin = 1, blurItersMax = 3;
+    int currDrunkLvl = 0;
 
     void Awake()
     {
@@ -120,6 +125,14 @@ public class StoryStep : MonoBehaviour
                 didWalkDog = true;
                 break;
         }
+        if (name == "Pub1" && choice.name != "Left One")
+            currDrunkLvl++;
+        if (name == "Pub2" && choice.name != "Light")
+            currDrunkLvl++;
+        if (name == "Pub3" && choice.name != "Left")
+            currDrunkLvl++;
+        BlurOptimized.Inst.blurSize = blurSizeMin + (blurSizeMax - blurSizeMin) * (currDrunkLvl / 3f);
+        BlurOptimized.Inst.blurIterations = Mathf.RoundToInt(blurItersMin + (blurItersMax - blurItersMin) * (currDrunkLvl / 3f));
 
         //cleanup
         gameObject.SetActive(false);
