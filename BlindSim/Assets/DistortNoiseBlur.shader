@@ -6,8 +6,13 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Opaque" }
+		Tags
+		{
+			//"Queue" = "Transparent"
+			"RenderType" = "Transparent"
+		}
 		LOD 100
+		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass
 		{
@@ -21,12 +26,14 @@
 			{
 				float4 vertex : POSITION;
 				float2 uv : TEXCOORD0;
+				float4 diff: COLOR0;
 			};
 
 			struct v2f
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
+				float4 diff : COLOR0;
 			};
 
 			v2f vert (appdata v)
@@ -34,6 +41,7 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
+				o.diff = v.diff;
 				return o;
 			}
 			
@@ -73,14 +81,14 @@
 			}
 
 			sampler2D _MainTex;
-			fixed4 frag (v2f i) : SV_Target
+			float4 frag (v2f i) : SV_Target
 			{
 				float2 p = i.uv * 6.;
 				float offset = nestedNoise(p);
-				fixed3 cOrig = tex2D(_MainTex, i.uv).rgb;
-				fixed3 cMod = tex2D(_MainTex, i.uv + float2(offset / 3., offset / 3.)).rgb;
-				fixed3 cFinal = cOrig * cMod * 5.;
-				return fixed4(cFinal, 1);
+				float3 cOrig = tex2D(_MainTex, i.uv).rgb;
+				float3 cMod = tex2D(_MainTex, i.uv + float2(offset / 3., offset / 3.)).rgb;
+				float3 cFinal = cOrig * cMod * 5.;
+				return float4(cFinal.r * i.diff.r, cFinal.g * i.diff.g, cFinal.b * i.diff.b, i.diff.a);
 			}
 			ENDCG
 		}
